@@ -1,0 +1,46 @@
+body {
+    background-color: #050505;
+    color: #e4e4e7;
+}
+
+.level-card {
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.level-card:hover {
+    transform: translateX(4px);
+    background-color: #1c1c1f;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; /* For horizontal scroll if any */
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #27272a;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3f3f46;
+}
+
+.play-overlay {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.thumbnail-container:hover .play-overlay {
+    opacity: 1;
+}
+
+/* Resizer Hover styles */
+#resizerLeft:hover, #resizerRight:hover {
+    background-color: #f97316; /* accent-orange */
+}

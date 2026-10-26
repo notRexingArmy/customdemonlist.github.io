@@ -1,0 +1,159 @@
+<!-- ================= HOME SECTION ================= -->
+<div id="homeSection" class="absolute inset-0 overflow-y-auto custom-scrollbar p-4 md:p-8 animate-fade-in hidden">
+     <div class="max-w-[95%] 2xl:max-w-[1800px] mx-auto space-y-8 pb-12">
+        <!-- Hero Banner -->
+        <div class="bg-dark-800 rounded-xl p-8 border border-dark-600 text-center relative overflow-hidden group">
+            <div class="absolute inset-0 bg-gradient-to-r from-accent-red/10 to-accent-blue/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="relative z-10">
+                <h1 class="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight">WELCOME TO THE <span class="text-accent-red">PRIVATE DEMONLIST</span></h1>
+                <p class="text-gray-400 max-w-2xl mx-auto mb-8">A ranking of the hardest completed levels beaten by me or by friends. Placements are subjective so it will never be truly accurate.</p>
+                <button id="heroViewListBtn" class="bg-accent-gold hover:bg-yellow-400 text-black font-bold py-3 px-8 rounded-lg transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-yellow-500/20">
+                    VIEW LIST
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- LEFT COLUMN -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Changelog -->
+                <div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden">
+                    <div class="p-4 border-b border-dark-600 bg-dark-800/50 flex items-center justify-between">
+                        <h2 class="font-bold text-white flex items-center gap-2">
+                            <i data-lucide="history" class="w-5 h-5 text-gray-400"></i> CHANGELOG
+                        </h2>
+                        <span class="text-xs text-gray-500" id="changelogLastUpdated">Last updated: ...</span>
+                    </div>
+                    <div id="changelogContainer" class="p-6 space-y-6 max-h-[500px] overflow-y-auto custom-scrollbar">
+                        <!-- JS Injection -->
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden">
+                    <div class="p-4 border-b border-dark-600 bg-dark-800/50">
+                        <h2 class="font-bold text-white flex items-center gap-2">
+                            <i data-lucide="globe" class="w-5 h-5 text-gray-400"></i> RESOURCES 
+                        </h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+                            <!-- AREDL -->
+                            <a href="https://aredl.net" target="_blank" class="flex flex-col items-center justify-center p-4 bg-dark-900 rounded-lg hover:bg-dark-700 transition-colors border border-dark-600/50 hover:border-accent-gold/50 group">
+                                <div class="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="trophy" class="w-5 h-5 text-yellow-400"></i>
+                                </div>
+                                <span class="text-xs font-bold text-white">AREDL</span>
+                                <span class="text-[10px] text-gray-500">All Rated Extreme Demon List</span>
+                            </a>
+                            <!-- Pointercrate -->
+                            <a href="https://pointercrate.com" target="_blank" class="flex flex-col items-center justify-center p-4 bg-dark-900 rounded-lg hover:bg-dark-700 transition-colors border border-dark-600/50 hover:border-accent-blue/50 group">
+                                <div class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="list" class="w-5 h-5 text-blue-400"></i>
+                                </div>
+                                <span class="text-xs font-bold text-white">Pointercrate</span>
+                                <span class="text-[10px] text-gray-500">Official Demonlist</span>
+                            </a>
+                            <!-- GDDL -->
+                            <a href="https://gdladder.com" target="_blank" class="flex flex-col items-center justify-center p-4 bg-dark-900 rounded-lg hover:bg-dark-700 transition-colors border border-dark-600/50 hover:border-accent-green/50 group">
+                                <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="database" class="w-5 h-5 text-green-400"></i>
+                                </div>
+                                <span class="text-xs font-bold text-white">GDDL</span>
+                                <span class="text-[10px] text-gray-500">GD Demon Ladder</span>
+                            </a>
+                            <!-- Pemonlist (Platformer) -->
+                            <a href="https://duckduckgo.com/?q=pemonlist&t=vivaldi&atb=v509-2&ia=web" target="_blank" class="flex flex-col items-center justify-center p-4 bg-dark-900 rounded-lg hover:bg-dark-700 transition-colors border border-dark-600/50 hover:border-accent-purple/50 group">
+                                <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="gamepad-2" class="w-5 h-5 text-purple-400"></i>
+                                </div>
+                                <span class="text-xs font-bold text-white">Pemonlist</span>
+                                <span class="text-[10px] text-gray-500">Platformer Demonlist</span>
+                            </a>
+                            <!-- Shitty List -->
+                            <a href="https://tsl.pages.dev/#/" target="_blank" class="flex flex-col items-center justify-center p-4 bg-dark-900 rounded-lg hover:bg-dark-700 transition-colors border border-dark-600/50 hover:border-gray-500/50 group">
+                                <div class="w-10 h-10 bg-gray-700/20 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="trash-2" class="w-5 h-5 text-gray-400"></i>
+                                </div>
+                                <span class="text-xs font-bold text-white">Shitty List</span>
+                                <span class="text-[10px] text-gray-500">Shitty Levels List</span>
+                            </a>
+                            <!-- Non-Listworthy -->
+                            <a href="https://docs.google.com/spreadsheets/d/1YxUE2kkvhT2E6AjnkvTf-o8iu_shSLbuFkEFcZOvieA/edit?gid=1850281333#gid=1850281333" target="_blank" class="flex flex-col items-center justify-center p-4 bg-dark-900 rounded-lg hover:bg-dark-700 transition-colors border border-dark-600/50 hover:border-accent-orange/50 group">
+                                <div class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="file-spreadsheet" class="w-5 h-5 text-orange-400"></i>
+                                </div>
+                                <span class="text-xs font-bold text-white">NLW Spreadsheet</span>
+                                <span class="text-[10px] text-gray-500">Non-Listworthy Extremes</span>
+                            </a>
+                            <!-- Insane Demon List -->
+                            <a href="https://insanedemonlist.com" target="_blank" class="flex flex-col items-center justify-center p-4 bg-dark-900 rounded-lg hover:bg-dark-700 transition-colors border border-dark-600/50 hover:border-accent-pink/50 group">
+                                <div class="w-10 h-10 bg-pink-500/20 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="skull" class="w-5 h-5 text-pink-400"></i>
+                                </div>
+                                <span class="text-xs font-bold text-white">IDL</span>
+                                <span class="text-[10px] text-gray-500">Insane Demonlist</span>
+                            </a>
+                            <!-- Unrated Demon List -->
+                            <a href="https://udl.pages.dev/#/" target="_blank" class="flex flex-col items-center justify-center p-4 bg-dark-900 rounded-lg hover:bg-dark-700 transition-colors border border-dark-600/50 hover:border-accent-cyan/50 group">
+                                <div class="w-10 h-10 bg-cyan-500/20 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="ghost" class="w-5 h-5 text-cyan-400"></i>
+                                </div>
+                                <span class="text-xs font-bold text-white">UDL</span>
+                                <span class="text-[10px] text-gray-500">Unrated Demonlist</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="space-y-8">
+                <!-- List Editors Card (Grouped) -->
+                <div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden">
+                    <div class="p-4 border-b border-dark-600 bg-dark-800/50">
+                        <h2 class="font-bold text-white flex items-center gap-2">
+                            <i data-lucide="users" class="w-5 h-5 text-gray-400"></i> LIST EDITORS
+                        </h2>
+                    </div>
+                    <div class="p-6 space-y-6">
+                        <!-- Owners -->
+                        <div id="staff-owners-group" class="hidden">
+                            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest text-center mb-3">Owner & Developer</h3>
+                            <div id="staff-owners-list" class="flex flex-wrap justify-center gap-2"></div>
+                        </div>
+                        
+                        <!-- Moderators -->
+                        <div id="staff-moderators-group" class="hidden">
+                            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest text-center mb-3">Moderators</h3>
+                            <div id="staff-moderators-list" class="flex flex-wrap justify-center gap-2"></div>
+                        </div>
+
+                        <!-- Helpers -->
+                        <div id="staff-helpers-group" class="hidden">
+                            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest text-center mb-3">Helpers</h3>
+                            <div id="staff-helpers-list" class="flex flex-wrap justify-center gap-2"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Supporters Card (Separate) -->
+                <div id="staff-supporters-card" class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden hidden">
+                    <div class="p-4 border-b border-dark-600 bg-dark-800/50">
+                        <h2 class="font-bold text-white flex items-center gap-2">
+                            <i data-lucide="heart" class="w-5 h-5 text-pink-400"></i> SUPPORTERS
+                        </h2>
+                    </div>
+                    <div class="p-6">
+                        <div id="staff-supporters-list" class="flex flex-wrap justify-center gap-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 border-t border-dark-600 pt-6 text-center text-gray-500 text-xs font-medium pb-8">
+            <p>&copy; 2025 Private Demonlist. All rights go to the respective owners.</p>
+        </div>
+    </div>
+</div>

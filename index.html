@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Demonlist</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="cdm_styles.css">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            900: '#0a0a0b',
+                            800: '#121214',
+                            700: '#1c1c1f',
+                            600: '#27272a',
+                        },
+                        accent: {
+                            blue: '#3b82f6',
+                            red: '#ef4444',
+                            green: '#22c55e',
+                            gold: '#eab308',
+                            orange: '#f97316',
+                            purple: '#a855f7',
+                            pink: '#ec4899',
+                            cyan: '#06b6d4'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="h-screen flex flex-col bg-dark-900 text-gray-200 font-sans overflow-hidden">
+
+    <!-- Navbar -->
+    <nav class="flex-shrink-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+        <div class="w-full px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer" id="navLogo">
+                    <i data-lucide="flame" class="w-8 h-8 text-accent-red"></i>
+                    <span class="text-xl font-black tracking-tighter text-white">PRIVATE DEMONLIST</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-gray-400">
+                    <button id="navMainList" class="hover:text-accent-blue transition-colors">The List</button>
+                    <button id="navLeaderboard" class="hover:text-accent-blue transition-colors">Leaderboard</button>
+                    <!-- NEW: Packs Tab -->
+                    <button id="navPacks" class="hover:text-accent-blue transition-colors">Packs</button>
+                    
+                    <!-- More Dropdown -->
+                    <div class="relative">
+                        <button id="navOtherBtn" class="hover:text-accent-blue transition-colors flex items-center gap-1">
+                            More <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div id="otherDropdown" class="hidden absolute left-0 top-full mt-2 w-48 bg-dark-800 border border-dark-600 rounded-xl shadow-2xl overflow-hidden z-50 animate-fade-in">
+                            <div class="py-1">
+                                <button id="navRoulette" class="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-dark-700 hover:text-white font-bold tracking-wide">
+                                    ROULETTE
+                                </button>
+                                <button id="navWebUpdates" class="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-dark-700 hover:text-white font-bold tracking-wide">
+                                    WEBSITE UPDATES
+                                </button>
+                                <button id="navMoreLists" class="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-dark-700 hover:text-white font-bold tracking-wide">
+                                    MORE LISTS
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Login Button / User Profile -->
+                    <div class="border-l border-dark-600 pl-6 ml-2 relative">
+                        <button id="navLoginBtn" class="bg-accent-blue hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-bold transition-colors">
+                            Login
+                        </button>
+                        
+                        <button id="navUserBtn" class="hidden flex items-center gap-2 hover:bg-dark-800 p-1.5 rounded-lg transition-colors">
+                            <img id="navUserAvatar" src="" class="w-8 h-8 rounded-full border border-dark-600 object-cover">
+                            <span id="navUserName" class="text-white font-bold">User</span>
+                        </button>
+
+                        <!-- User Dropdown Menu -->
+                        <div id="userDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-dark-800 border border-dark-600 rounded-xl shadow-2xl overflow-hidden z-50 animate-fade-in">
+                            <div class="py-1">
+                                <!-- Mod Panel Button -->
+                                <button id="dropdownModPanel" class="hidden w-full text-left px-4 py-3 text-sm text-accent-gold hover:bg-dark-700 hover:text-yellow-300 font-bold tracking-wide border-b border-dark-700/50">
+                                    MOD PANEL
+                                </button>
+                                <button id="dropdownProfile" class="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-dark-700 hover:text-white font-bold tracking-wide">
+                                    PROFILE
+                                </button>
+                                <button id="dropdownClan" class="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-dark-700 hover:text-white font-bold tracking-wide">
+                                    CLAN
+                                </button>
+                                <button id="dropdownSubmit" class="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-dark-700 hover:text-white font-bold tracking-wide">
+                                    SUBMIT A RECORD
+                                </button>
+                                <button id="dropdownSettings" class="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-dark-700 hover:text-white font-bold tracking-wide">
+                                    SETTINGS
+                                </button>
+                                <div class="border-t border-dark-600 my-1"></div>
+                                <button id="dropdownLogout" class="block w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-dark-700 hover:text-red-300 font-bold tracking-wide">
+                                    LOGOUT
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="md:hidden p-2 text-gray-400">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Wrapper (Injected by JS) -->
+    <main id="app-container" class="flex-grow overflow-hidden relative">
+        <!-- SECTIONS WILL APPEAR HERE -->
+    </main>
+
+    <!-- Modals (Keep these in index for global access) -->
+    <!-- Website Updates Modal -->
+    <div id="webUpdatesModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-dark-800 w-full max-w-lg rounded-xl border border-dark-600 p-6 shadow-2xl flex flex-col max-h-[80vh]">
+            <div class="flex justify-between items-center mb-6 border-b border-dark-600 pb-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                    <i data-lucide="globe" class="w-6 h-6 text-accent-blue"></i>
+                    Website Updates
+                </h2>
+                <button id="closeWebUpdatesBtn" class="text-gray-400 hover:text-white">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="webChangelogContainer" class="flex-grow overflow-y-auto custom-scrollbar space-y-4 pr-2">
+                <!-- JS Injected Updates -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Modal -->
+    <div id="filterModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-dark-800 w-full max-w-5xl rounded-xl border border-dark-600 p-6 shadow-2xl flex flex-col max-h-[90vh]">
+            <div class="flex justify-between items-center mb-6 border-b border-dark-600 pb-4">
+                <h2 class="text-2xl font-bold text-white">List Search Settings</h2>
+                <button id="closeFilterModalBtn" class="text-gray-400 hover:text-white">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="flex-grow overflow-y-auto custom-scrollbar flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-1/4 space-y-4">
+                    <h3 class="font-bold text-gray-400 uppercase text-xs tracking-wider flex items-center gap-2">
+                        Sort Type <i data-lucide="arrow-up-down" class="w-3 h-3"></i>
+                    </h3>
+                    <div class="space-y-2">
+                        <label class="cursor-pointer group block">
+                            <input type="radio" name="sortType" value="rank" class="peer sr-only" checked>
+                            <div class="flex items-center gap-3 p-3 rounded-lg border border-dark-600 bg-dark-900/50 text-gray-400 peer-checked:border-accent-orange peer-checked:text-white transition-all hover:border-gray-500">
+                                <span class="font-bold text-sm">Rank</span>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer group block">
+                            <input type="radio" name="sortType" value="enjoyment" class="peer sr-only">
+                            <div class="flex items-center gap-3 p-3 rounded-lg border border-dark-600 bg-dark-900/50 text-gray-400 peer-checked:border-accent-orange peer-checked:text-white transition-all hover:border-gray-500">
+                                <span class="font-bold text-sm">Enjoyment</span>
+                            </div>
+                        </label>
+                        <!-- NEW: Levels in Packs Filter -->
+                        <label class="cursor-pointer group block">
+                            <input type="radio" name="sortType" value="in_packs" class="peer sr-only">
+                            <div class="flex items-center gap-3 p-3 rounded-lg border border-dark-600 bg-dark-900/50 text-gray-400 peer-checked:border-accent-orange peer-checked:text-white transition-all hover:border-gray-500">
+                                <span class="font-bold text-sm">Levels in Packs</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Rank Range Inputs (Commented out as per previous instructions, keeping structure if needed later) -->
+                <!-- 
+                <div class="lg:w-1/4 space-y-4">
+                    ...
+                </div>
+                -->
+                
+                <div class="lg:w-1/2 space-y-4">
+                    <h3 class="font-bold text-gray-400 uppercase text-xs tracking-wider">Tags</h3>
+                    <div id="filterTagsContainer" class="flex flex-wrap gap-2 p-4 bg-dark-900/50 rounded-lg border border-dark-600 min-h-[150px] content-start"></div>
+                </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-dark-600 flex justify-end gap-3">
+                <button id="resetFiltersBtn" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors text-sm">Reset all</button>
+                <button id="cancelFiltersBtn" class="px-4 py-2 bg-dark-700 hover:bg-dark-600 text-white font-bold rounded-lg transition-colors text-sm">Cancel</button>
+                <button id="applyFiltersBtn" class="px-6 py-2 bg-accent-orange hover:bg-orange-600 text-white font-bold rounded-lg transition-colors text-sm">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-dark-800 w-full max-w-md rounded-xl border border-dark-600 p-8 shadow-2xl">
+            <h2 class="text-2xl font-bold text-white mb-6 text-center">Login</h2>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">USERNAME</label>
+                    <input type="text" id="loginUser" class="w-full bg-dark-900 border border-dark-600 rounded p-2 text-white focus:border-accent-blue outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">PASSWORD</label>
+                    <input type="password" id="loginPass" class="w-full bg-dark-900 border border-dark-600 rounded p-2 text-white focus:border-accent-blue outline-none">
+                </div>
+                <div class="pt-4 flex gap-3">
+                    <button type="button" id="closeLoginBtn" class="flex-1 bg-dark-700 hover:bg-dark-600 text-white py-2 rounded font-bold">Cancel</button>
+                    <button type="submit" class="flex-1 bg-accent-blue hover:bg-blue-600 text-white py-2 rounded font-bold">Login</button>
+                </div>
+            </form>
+            <!-- NEW: Footer Message -->
+            <div class="mt-6 text-center text-xs text-gray-500 border-t border-dark-600 pt-4">
+                Don't have an account? <span class="text-accent-blue font-bold cursor-default" title="Contact an administrator to create an account.">Ask an admin</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+        <div class="bg-dark-800 w-full max-w-sm rounded-xl border border-red-500/30 p-6 shadow-2xl animate-fade-in">
+            <div class="text-center">
+                <div class="mx-auto w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center mb-4">
+                    <i data-lucide="x-circle" class="w-6 h-6 text-red-500"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Login Failed</h3>
+                <p class="text-gray-400 text-sm mb-6">Incorrect username or password.</p>
+                <button id="closeErrorBtn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div id="confirmModal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+        <div class="bg-dark-800 w-full max-w-sm rounded-xl border border-dark-600 p-6 shadow-2xl animate-fade-in">
+            <div class="text-center">
+                <div class="mx-auto w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center mb-4">
+                    <i data-lucide="alert-triangle" class="w-6 h-6 text-red-500"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Are you sure?</h3>
+                <p class="text-gray-400 text-sm mb-6">This will reset your current roulette streak.</p>
+                <div class="flex gap-3">
+                    <button id="cancelConfirmBtn" class="flex-1 bg-dark-700 hover:bg-dark-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">Cancel</button>
+                    <button id="confirmGiveUpBtn" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">Yes, Give Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toastNotification" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[200] bg-dark-800 border border-accent-green text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none">
+        <div class="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center">
+            <i data-lucide="check" class="w-4 h-4 text-accent-green"></i>
+        </div>
+        <span class="font-bold text-sm" id="toastMessage">Changes saved successfully!</span>
+    </div>
+
+    <!-- Record Details -->
+    <div id="recordDetailsModal" class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-dark-800 w-full max-w-lg rounded-xl border border-dark-600 p-6 shadow-2xl relative">
+            <button id="closeRecordDetailsBtn" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h2 class="text-2xl font-bold text-white mb-1" id="detailsLevelName">Level Name</h2>
+            <div class="flex items-center gap-2 mb-6">
+                <span id="detailsRank" class="text-accent-gold font-bold text-lg">#1</span>
+                <span id="detailsStatus" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-yellow-500/20 text-yellow-400 border border-yellow-500/50">PENDING</span>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Video Link</label>
+                    <a id="detailsVideoLink" href="#" target="_blank" class="text-accent-blue hover:underline break-all text-sm">https://...</a>
+                </div>
+                <div id="detailsRawContainer">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Raw Footage</label>
+                    <a id="detailsRawLink" href="#" target="_blank" class="text-accent-blue hover:underline break-all text-sm">https://...</a>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Comments</label>
+                    <p id="detailsComments" class="text-gray-300 text-sm bg-dark-900 p-3 rounded border border-dark-700">No comments.</p>
+                </div>
+                <div class="pt-4 text-right text-xs text-gray-600 font-mono">
+                    ID: <span id="detailsId">...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data (Sync load is fine for data) -->
+    <script src="changeable/cdm_data.js"></script>
+    <script src="changeable/cdm_rankings.js"></script>
+    <script src="changeable/cdm_users.js"></script>
+    <script src="changeable/cdm_changelog.js"></script>
+    <script src="changeable/cdm_packs.js"></script>
+    
+    <!-- Loader (Logic Scripts are loaded by this) -->
+    <script src="js/cdm_loader.js"></script>
+    
+    <!-- Other Dropdown Logic (Inline is safe if Nav is in index) -->
+    <script>
+        const navOtherBtn = document.getElementById('navOtherBtn');
+        const otherDropdown = document.getElementById('otherDropdown');
+        
+        if (navOtherBtn && otherDropdown) {
+            navOtherBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                otherDropdown.classList.toggle('hidden');
+                
+                // Close user dropdown if open
+                const userDropdown = document.getElementById('userDropdown');
+                if (userDropdown && !userDropdown.classList.contains('hidden')) {
+                    userDropdown.classList.add('hidden');
+                }
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!navOtherBtn.contains(e.target) && !otherDropdown.contains(e.target)) {
+                    otherDropdown.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

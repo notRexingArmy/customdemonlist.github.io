@@ -1,0 +1,450 @@
+<!-- ================= LEADERBOARD SECTION ================= -->
+<div id="leaderboardSection" class="hidden absolute inset-0 overflow-y-auto custom-scrollbar p-4 md:p-8 animate-fade-in">
+     <div class="max-w-[95%] 2xl:max-w-[1800px] mx-auto">
+        <div class="flex flex-col md:flex-row items-end md:items-center justify-between gap-4 mb-6">
+            <div class="flex items-center gap-8">
+                <h1 class="text-3xl font-bold text-white">Leaderboard</h1>
+                <div class="flex gap-4 text-sm font-bold tracking-wider">
+                    <button id="lbTabClassic" class="text-white border-b-2 border-accent-orange pb-1 transition-colors">CLASSIC</button>
+                    <button id="lbTabPlatformer" class="text-gray-500 hover:text-gray-300 pb-1 transition-colors">PLATFORMER</button>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 w-full md:w-auto">
+                <div class="relative w-full md:w-64">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="search" class="w-4 h-4 text-dark-600"></i>
+                    </div>
+                    <input type="text" id="leaderboardSearchInput" placeholder="Search" class="block w-full pl-9 pr-3 py-2 bg-dark-800 border border-dark-600 rounded-lg focus:ring-1 focus:ring-accent-orange focus:border-transparent text-sm text-white">
+                </div>
+            </div>
+        </div>
+        <div class="bg-dark-800 rounded-lg overflow-hidden border border-dark-600 shadow-xl">
+            <div class="grid grid-cols-12 gap-2 p-3 bg-[#f97316] text-black font-extrabold text-xs uppercase tracking-wider items-center">
+                <div class="col-span-1 text-center">Rank</div>
+                <div class="col-span-4 pl-2">Player</div>
+                <!-- CHANGED: Points centered -->
+                <div class="col-span-3 text-center">Points</div>
+                <div class="col-span-3 text-center">Hardest</div>
+                <div class="col-span-1 text-center">Completions</div>
+            </div>
+            <div id="leaderboardList" class="divide-y divide-dark-600/50 bg-dark-800"></div>
+        </div>
+     </div>
+</div>
+
+<!-- ================= PROFILE SECTION ================= -->
+<div id="profileSection" class="hidden absolute inset-0 overflow-y-auto custom-scrollbar p-4 md:p-8 animate-fade-in">
+     <div class="max-w-[95%] 2xl:max-w-[1800px] mx-auto">
+        <button onclick="showLeaderboard()" class="mb-6 flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm font-medium">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Leaderboard
+        </button>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left: User Info Card -->
+            <div class="space-y-6">
+                <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 flex flex-col items-center text-center">
+                    <!-- Avatar -->
+                    <img id="profileAvatar" src="" alt="" class="w-24 h-24 rounded-full border-4 border-dark-600 mb-4 object-cover" style="display:none;" onload="if(this.src) this.style.display='block'" onerror="this.style.display='none'">
+                    
+                    <div class="flex items-center gap-2 mb-1">
+                        <img id="profileFlag" src="https://flagcdn.com/w20/de.png" class="w-5 h-auto rounded-sm">
+                        <h1 id="profileName" class="text-2xl font-black text-white">User</h1>
+                    </div>
+                    <div class="text-accent-orange font-bold text-sm tracking-widest mb-4">CLAN: <span id="profileClan">NONE</span></div>
+                    <p id="profileBio" class="text-gray-400 text-sm italic mb-6">"No bio set."</p>
+
+                    <!-- NEW: Classic / Platformer Toggle for Profile (Placed above stats as per image) -->
+                    <div class="flex items-center justify-center gap-4 text-lg font-bold tracking-wider mb-6 w-full border-t border-dark-600 pt-4">
+                        <button id="profileModeClassic" class="text-white border-b-2 border-accent-orange pb-1 transition-colors px-2">CLASSIC</button>
+                        <button id="profileModePlatformer" class="text-gray-500 hover:text-gray-300 pb-1 border-b-2 border-transparent transition-colors px-2">PLATFORMER</button>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 w-full border-t border-b border-dark-600 py-4 mb-4">
+                        <div><div class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Levels Points</div><div id="profilePoints" class="text-xl font-bold text-white">0</div></div>
+                        <div><div class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Total Points</div><div id="profileTotalPoints" class="text-xl font-bold text-white">0</div></div>
+                        <div><div class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Pack Points</div><div id="profilePacksPoints" class="text-xl font-bold text-white">-</div></div>
+                    </div>
+                    <div class="w-full space-y-2 text-sm">
+                        <div class="flex justify-between items-center text-gray-400 font-bold uppercase text-xs tracking-wider mb-2">
+                            <span class="flex items-center gap-2"><i data-lucide="globe" class="w-3 h-3"></i> Global Rankings</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-gray-400">Global Rank (with packs)</span>
+                            <span id="profilePackRank" class="text-accent-orange font-bold">#--</span>
+                        </div>
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-gray-400">Completion Count Rank</span>
+                            <span id="profileCountRank" class="text-accent-orange font-bold">#--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Completed Levels List -->
+            <div class="lg:col-span-2">
+                <div class="flex items-center justify-between border-b border-dark-600 mb-4">
+                    <div class="flex items-center gap-6">
+                        <button id="profileTabCompleted" class="text-lg font-bold text-white border-b-2 border-accent-orange py-2 px-1 transition-colors">COMPLETED</button>
+                        <button id="profileTabCreated" class="text-lg font-bold text-gray-500 border-b-2 border-transparent hover:text-gray-300 py-2 px-1 transition-colors">CREATED</button>
+                        <!-- ADDED PACKS TAB -->
+                        <button id="profileTabPacks" class="text-lg font-bold text-gray-500 border-b-2 border-transparent hover:text-gray-300 py-2 px-1 transition-colors">PACKS</button>
+                    </div>
+
+                    <!-- RESTORED: Profile Filter Dropdown -->
+                    <div id="profileFilterWrapper" class="relative">
+                        <button id="profileFilterBtn" onclick="toggleProfileFilter()" class="flex items-center gap-2 text-xs font-bold text-gray-400 bg-dark-700 hover:text-white hover:bg-dark-600 px-3 py-1.5 rounded transition-colors border border-transparent">
+                            <i data-lucide="filter" class="w-3 h-3"></i>
+                            <span id="profileFilterLabel">Filter</span>
+                            <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                        </button>
+                        <div id="profileFilterDropdown" class="hidden absolute right-0 top-full mt-2 w-40 bg-dark-800 border border-dark-600 rounded shadow-xl z-20 overflow-hidden animate-fade-in">
+                            <button onclick="setProfileFilter('all')" class="block w-full text-left px-4 py-2 text-xs text-gray-300 hover:bg-dark-700 hover:text-white font-bold">All</button>
+                            <button onclick="setProfileFilter('former_hardest')" class="block w-full text-left px-4 py-2 text-xs text-yellow-400 hover:bg-dark-700 hover:text-yellow-200 font-bold">Former Hardest</button>
+                            <button onclick="setProfileFilter('verified')" class="block w-full text-left px-4 py-2 text-xs text-purple-400 hover:bg-dark-700 hover:text-purple-200 font-bold">Verified</button>
+                            <button onclick="setProfileFilter('mobile')" class="block w-full text-left px-4 py-2 text-xs text-cyan-400 hover:bg-dark-700 hover:text-cyan-200 font-bold">Mobile</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="profileLevelsList" class="space-y-2"></div>
+            </div>
+        </div>
+     </div>
+</div>
+
+<!-- ================= SETTINGS SECTION ================= -->
+<div id="settingsSection" class="hidden absolute inset-0 overflow-y-auto custom-scrollbar p-4 md:p-8 animate-fade-in">
+     <div class="w-full max-w-2xl mx-auto">
+        <h1 class="text-3xl font-black text-white mb-8 tracking-tight border-b border-dark-600 pb-4">Account Settings</h1>
+            <p class="text-xl text-red-500 mb-3">Nothing here saves as of now, due to a lack of having an actual database.</p>
+        
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-8 space-y-6">
+            
+            <div class="mb-4">
+                <label class="block text-sm font-bold text-gray-400 mb-2">Global name:</label>
+                <input type="text" id="settingsName" maxlength="50" class="w-full bg-dark-900 border border-dark-600 rounded p-3 text-white focus:border-accent-orange outline-none" placeholder="Max 50 characters">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-bold text-gray-400 mb-2">Description:</label>
+                <textarea id="settingsBio" rows="3" maxlength="500" class="w-full bg-dark-900 border border-dark-600 rounded p-3 text-white focus:border-accent-orange outline-none" placeholder="Max 500 characters"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-bold text-gray-400 mb-1">Country:</label>
+                <select id="settingsCountry" class="w-full bg-dark-900 border border-dark-600 rounded p-3 text-white focus:border-accent-orange outline-none">
+                    <option value="DE">Germany</option>
+                    <option value="US">United States</option>
+                    <option value="CH">Switzerland</option>
+                    <option value="GB">United Kingdom</option>
+                    <option value="CA">Canada</option>
+                    <option value="FR">France</option>
+                    <option value="ES">Spain</option>
+                    <option value="IT">Italy</option>
+                    <option value="PL">Poland</option>
+                    <option value="RU">Russia</option>
+                    <option value="AU">Australia</option>
+                </select>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-bold text-gray-400 mb-1">Leaderboard status:</label>
+                <p class="text-xs text-gray-500 mb-3">You can choose here whether you want to be on the leaderboard or not.</p>
+                <label class="flex items-center cursor-pointer">
+                    <div class="relative">
+                        <input type="checkbox" id="settingsStatus" class="sr-only" checked>
+                        <div class="block-bg w-10 h-6 bg-dark-600 rounded-full shadow-inner transition-colors"></div>
+                        <div class="dot absolute w-4 h-4 bg-gray-300 rounded-full shadow left-1 top-1 transition-transform"></div>
+                    </div>
+                    <div class="ml-3 text-white font-medium">Normal</div>
+                </label>
+            </div>
+
+            <div class="flex gap-4 pt-4">
+                <button id="cancelSettingsBtn" class="flex-1 bg-dark-700 hover:bg-dark-600 text-white font-bold py-3 rounded-lg transition-colors">
+                    Cancel
+                </button>
+                <button id="saveSettingsBtn" class="flex-1 bg-accent-orange hover:bg-orange-600 text-white font-bold py-3 rounded-lg transition-colors shadow-lg shadow-orange-500/20">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= CLAN SECTION (WIP) ================= -->
+<div id="clanSection" class="hidden absolute inset-0 flex items-center justify-center p-4 md:p-8 animate-fade-in">
+    <div class="text-center max-w-lg p-8 bg-dark-800 rounded-xl border border-dark-600 shadow-2xl">
+        <div class="mx-auto w-20 h-20 bg-accent-orange/10 rounded-full flex items-center justify-center mb-6">
+            <i data-lucide="hammer" class="w-10 h-10 text-accent-orange"></i>
+        </div>
+        <h2 class="text-3xl font-black text-white mb-4">WORK IN PROGRESS</h2>
+        <p class="text-gray-400 leading-relaxed mb-6">
+            The Clan system is currently under development. Check back later for updates on this feature!
+        </p>
+        <button onclick="showHome()" class="bg-dark-700 hover:bg-dark-600 text-white font-bold py-2 px-6 rounded-lg transition-colors">
+            Return Home
+        </button>
+    </div>
+</div>
+
+<!-- ================= SUBMIT RECORD SECTION ================= -->
+<div id="submitRecordSection" class="hidden absolute inset-0 overflow-y-auto custom-scrollbar p-4 md:p-8 animate-fade-in">
+     <div class="w-full max-w-2xl mx-auto">
+        <h1 id="submitHeader" class="text-3xl font-black text-white mb-2 tracking-tight text-center">Submit a Record</h1>
+        <p id="submitDescription" class="text-gray-400 mb-8 border-b border-dark-600 pb-4 text-center">
+            Submit your completion for review. 
+            <span class="text-accent-orange block mt-1 text-sm font-bold">Note: Since there is no backend, this will not actually save anywhere.</span>
+        </p>
+        
+        <form id="submitRecordForm" class="bg-dark-800 rounded-xl border border-dark-600 p-8 space-y-6">
+            
+            <!-- Type Selection -->
+            <div class="flex gap-4 mb-2">
+                <label class="flex-1 cursor-pointer group">
+                    <input type="radio" name="submitType" value="Classic" class="peer sr-only" checked>
+                    <div class="text-center py-2 rounded-lg border border-dark-600 bg-dark-900 text-gray-500 font-bold text-sm transition-all peer-checked:bg-accent-orange peer-checked:text-white peer-checked:border-accent-orange group-hover:border-gray-500">
+                        CLASSIC
+                    </div>
+                </label>
+                <label class="flex-1 cursor-pointer group">
+                    <input type="radio" name="submitType" value="Platformer" class="peer sr-only">
+                    <div class="text-center py-2 rounded-lg border border-dark-600 bg-dark-900 text-gray-500 font-bold text-sm transition-all peer-checked:bg-accent-orange peer-checked:text-white peer-checked:border-accent-orange group-hover:border-gray-500">
+                        PLATFORMER
+                    </div>
+                </label>
+            </div>
+
+            <div class="relative group">
+                <label class="block text-sm font-bold text-gray-400 mb-2">Level Name <span class="text-red-500">*</span></label>
+                <input type="text" id="submitLevelName" required class="w-full bg-dark-900 border border-dark-600 rounded-lg p-3 text-white focus:border-accent-blue outline-none placeholder-gray-600 transition-colors" placeholder="Search or select level..." autocomplete="off">
+                <!-- Dropdown List -->
+                <div id="submitLevelDropdown" class="hidden absolute left-0 right-0 top-[calc(100%+4px)] bg-dark-800 border border-dark-600 rounded-lg shadow-2xl z-50 max-h-60 overflow-y-auto custom-scrollbar">
+                    <!-- Items injected via JS -->
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-400 mb-2">Video Link (YouTube, Medal, Twitch) <span class="text-red-500">*</span></label>
+                <input type="url" id="submitVideoLink" required class="w-full bg-dark-900 border border-dark-600 rounded p-3 text-white focus:border-accent-blue outline-none placeholder-gray-600" placeholder="https://...">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-400 mb-2">Raw Footage Link (Optional)</label>
+                <input type="url" id="submitRawLink" class="w-full bg-dark-900 border border-dark-600 rounded p-3 text-white focus:border-accent-blue outline-none placeholder-gray-600" placeholder="https://...">
+            </div>
+
+            <div>
+                <div class="flex justify-between mb-2">
+                     <label class="block text-sm font-bold text-gray-400">Comments</label>
+                     <span id="commentCharCount" class="text-xs text-gray-500">0/500</span>
+                </div>
+                <textarea id="submitComments" rows="4" class="w-full bg-dark-900 border border-dark-600 rounded-lg p-3 text-white focus:border-accent-blue outline-none placeholder-gray-600 transition-colors" placeholder="Any additional info..."></textarea>
+                <p id="commentWarning" class="hidden text-red-500 text-xs mt-1">Comment too long!</p>
+            </div>
+
+            <button type="submit" id="submitActionBtn" class="w-full bg-accent-green hover:bg-green-600 text-white font-bold py-3 rounded-lg transition-colors shadow-lg shadow-green-500/20">
+                Submit Record
+            </button>
+            
+            <!-- Toggle Link for New/Resubmit -->
+            <div class="text-center mt-4">
+                <p id="submitModeToggle" class="text-sm text-gray-500 hover:text-white cursor-pointer underline transition-colors select-none">
+                    Want to resend a record?
+                </p>
+            </div>
+        </form>
+
+        <div class="mt-12">
+            <h2 class="text-xl font-bold text-white mb-4 border-b border-dark-600 pb-2">Your Recent Submissions</h2>
+            <div id="submittedRecordsList" class="space-y-2">
+                <!-- JS Injection -->
+                <div class="text-center py-8 text-gray-600 italic text-sm">No submissions found.</div>
+            </div>
+        </div>
+     </div>
+</div>
+
+<!-- ================= MOD PANEL SECTION ================= -->
+<div id="modPanelSection" class="hidden absolute inset-0 overflow-y-auto custom-scrollbar p-4 md:p-8 animate-fade-in">
+     <div class="w-full max-w-6xl mx-auto">
+        <div class="flex items-center justify-between mb-8 pb-4 border-b border-dark-600">
+            <div>
+                <h1 class="text-3xl font-black text-white tracking-tight flex items-center gap-3">
+                    <i data-lucide="shield-alert" class="w-8 h-8 text-accent-gold"></i> MODERATION PANEL
+                </h1>
+                <p class="text-gray-400 text-sm mt-1">Manage submissions and list settings.</p>
+            </div>
+            <button onclick="showHome()" class="text-gray-400 hover:text-white transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex gap-6 border-b border-dark-600 mb-6">
+            <button id="modTabSubmissions" class="text-white border-b-2 border-accent-gold pb-3 font-bold px-2 transition-colors">Submissions</button>
+            <button id="modTabListManager" class="text-gray-500 hover:text-white border-b-2 border-transparent pb-3 font-bold px-2 transition-colors">List Manager</button>
+            <button id="modTabBans" class="text-gray-500 hover:text-gray-300 pb-3 font-bold px-2 cursor-not-allowed opacity-50 transition-colors" title="Coming Soon">Bans</button>
+            <button id="modTabAudit" class="text-gray-500 hover:text-gray-300 pb-3 font-bold px-2 cursor-not-allowed opacity-50 transition-colors" title="Coming Soon">Audit Log</button>
+        </div>
+
+        <!-- CONTENT: Submissions -->
+        <div id="modContentSubmissions" class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden">
+            <div class="grid grid-cols-12 gap-4 p-4 bg-dark-900/50 border-b border-dark-600 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <div class="col-span-3">Level</div>
+                <div class="col-span-2">User</div>
+                <div class="col-span-2">Queue Position</div>
+                <div class="col-span-3">Status</div>
+                <div class="col-span-2 text-right">Actions</div>
+            </div>
+            <div id="modSubmissionsList" class="divide-y divide-dark-600/50">
+                <!-- JS Injection -->
+                <div class="p-8 text-center text-gray-500 italic">No pending submissions.</div>
+            </div>
+        </div>
+
+        <!-- CONTENT: List Manager -->
+        <div id="modContentListManager" class="hidden">
+            <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex gap-4">
+                        <button id="modListTabClassic" class="px-4 py-2 bg-accent-orange text-white font-bold rounded hover:bg-orange-600 transition-colors">Classic</button>
+                        <button id="modListTabPlatformer" class="px-4 py-2 bg-dark-700 text-gray-400 font-bold rounded hover:bg-dark-600 transition-colors">Platformer</button>
+                    </div>
+                    <button id="btnSaveListOrder" class="px-6 py-2 bg-green-600 text-white font-bold rounded hover:bg-green-700 shadow-lg shadow-green-500/20 transition-all flex items-center gap-2">
+                        <i data-lucide="save" class="w-4 h-4"></i> Copy New Ranking
+                    </button>
+                </div>
+                
+                <div class="bg-dark-900/50 border border-dark-600 rounded-xl p-4 max-h-[600px] overflow-y-auto custom-scrollbar">
+                    <div id="modListManagerList" class="space-y-1">
+                        <!-- List Items Injected Here -->
+                    </div>
+                </div>
+                <p class="text-center text-xs text-gray-500 mt-4">
+                    Use Up/Down arrows to reorder levels. Click "Copy New Ranking" to get the updated code for <code>cdm_rankings.js</code>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mod Action Confirmation Modal -->
+<div id="modActionModal" class="fixed inset-0 z-[130] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+    <div class="bg-dark-800 w-full max-w-sm rounded-xl border border-dark-600 p-6 shadow-2xl animate-fade-in">
+        <div class="text-center">
+            <div class="mx-auto w-12 h-12 bg-dark-700 rounded-full flex items-center justify-center mb-4">
+                <i data-lucide="alert-circle" class="w-6 h-6 text-accent-gold"></i>
+            </div>
+            <h3 id="modActionTitle" class="text-xl font-bold text-white mb-2">Confirm Action</h3>
+            <p id="modActionDesc" class="text-gray-400 text-sm mb-6">Are you sure?</p>
+            <div class="flex gap-3">
+                <button id="cancelModActionBtn" class="flex-1 bg-dark-700 hover:bg-dark-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                    Cancel
+                </button>
+                <button id="confirmModActionBtn" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Submission Detail Modal -->
+<div id="modSubmissionDetailModal" class="fixed inset-0 z-[140] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+    <div class="bg-dark-800 w-full max-w-lg rounded-xl border border-dark-600 p-6 shadow-2xl animate-fade-in">
+        <div class="flex justify-between items-start mb-4">
+            <div>
+                <h3 class="text-2xl font-black text-white tracking-tight" id="modDetailLevelName">Level Name</h3>
+                <div id="modDetailRank" class="text-lg font-bold">#--</div>
+            </div>
+            <button onclick="closeSubmissionDetail()" class="text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        
+        <div class="space-y-4 mb-6">
+            <div class="flex items-center justify-between border-b border-dark-700 pb-2">
+                <span class="text-gray-500 font-bold text-xs uppercase">User</span>
+                <span id="modDetailUser" class="text-white font-bold">Username</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-dark-700 pb-2">
+                <span class="text-gray-500 font-bold text-xs uppercase">Queue Position</span>
+                <span id="modDetailQueue" class="text-accent-blue font-mono">1</span>
+            </div>
+            <div>
+                <label class="block text-gray-500 font-bold text-xs uppercase mb-1">Video Link</label>
+                <a id="modDetailVideo" href="#" target="_blank" class="text-accent-blue hover:underline break-all text-sm">https://youtube.com/...</a>
+            </div>
+            <div id="modDetailRawContainer">
+                <label class="block text-gray-500 font-bold text-xs uppercase mb-1">Raw Footage</label>
+                <a id="modDetailRaw" href="#" target="_blank" class="text-accent-blue hover:underline break-all text-sm">https://youtube.com/...</a>
+            </div>
+            <div>
+                <label class="block text-gray-500 font-bold text-xs uppercase mb-1">Comments</label>
+                <div id="modDetailComments" class="bg-dark-900 p-3 rounded text-gray-300 text-sm italic border border-dark-700">No comments.</div>
+            </div>
+        </div>
+
+        <div class="flex gap-3 pt-2 border-t border-dark-600">
+            <button id="btnDetailDeny" class="flex-1 bg-red-600/20 hover:bg-red-600/40 text-red-400 border border-red-600/50 font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
+                <i data-lucide="x" class="w-4 h-4"></i> Deny
+            </button>
+            <button id="btnDetailAccept" class="flex-1 bg-green-600/20 hover:bg-green-600/40 text-green-400 border border-green-600/50 font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
+                <i data-lucide="check" class="w-4 h-4"></i> Accept
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ================= PACKS SECTION ================= -->
+<div id="packsSection" class="hidden absolute inset-0 overflow-y-auto custom-scrollbar p-4 md:p-8 animate-fade-in">
+     <div class="max-w-[95%] 2xl:max-w-[1800px] mx-auto">
+        <div class="flex flex-col md:flex-row items-end md:items-center justify-between gap-4 mb-6">
+            <div class="flex items-center gap-8">
+                <h1 class="text-3xl font-bold text-white">Packs</h1>
+                <div class="flex gap-4 text-sm font-bold tracking-wider">
+                    <button id="packsTabClassic" class="text-white border-b-2 border-accent-orange pb-1 transition-colors">CLASSIC</button>
+                    <button id="packsTabPlatformer" class="text-gray-500 hover:text-gray-300 pb-1 transition-colors">PLATFORMER</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Packs Grid -->
+        <div id="packsGridContainer">
+            <div id="packsGrid" class="space-y-12">
+                <!-- Packs Injected Here -->
+            </div>
+        </div>
+
+        <!-- Pack Details Modal (Reused Logic Structure) -->
+        <div id="packDetailsModal" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+            <div class="bg-dark-800 w-full max-w-4xl rounded-xl border border-dark-600 shadow-2xl flex flex-col max-h-[85vh] overflow-hidden">
+                <div class="p-6 border-b border-dark-600 bg-dark-900/50 flex justify-between items-start">
+                    <div>
+                        <h2 id="packDetailName" class="text-3xl font-black text-white tracking-tight mb-2">Pack Name</h2>
+                        <p id="packDetailDesc" class="text-gray-400 text-sm">Description...</p>
+                    </div>
+                    <button onclick="closePackDetails()" class="text-gray-400 hover:text-white transition-colors p-2 hover:bg-dark-700 rounded-lg">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                
+                <div class="flex-1 overflow-y-auto custom-scrollbar p-6 bg-dark-900/30">
+                     <div id="packLevelsList" class="grid grid-cols-1 gap-3"></div>
+                </div>
+                
+                <div class="p-4 border-t border-dark-600 bg-dark-800 flex justify-between items-center">
+                    <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Pack Progress</span>
+                    <div class="flex items-center gap-3">
+                         <div class="h-2 w-48 bg-dark-700 rounded-full overflow-hidden">
+                             <div id="packProgressBar" class="h-full bg-accent-green w-0 transition-all duration-500"></div>
+                         </div>
+                         <span id="packProgressText" class="text-white font-bold text-sm">0/0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
